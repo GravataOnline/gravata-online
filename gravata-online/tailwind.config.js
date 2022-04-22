@@ -12,10 +12,9 @@ module.exports = {
       fontFamily: {
         ubuntu: "ubunto",
       },
-      // backgroundImage: (theme) => ({
-      //   "hero-pattern": "url('/img/hero-pattern.svg')",
-      //   "footer-texture": "url('/img/footer-texture.png')",
-      // }),
+      backgroundImage: (theme) => ({
+        letras: "url('/bg-textos.svg')",
+      }),
     },
   },
   plugins: [],
