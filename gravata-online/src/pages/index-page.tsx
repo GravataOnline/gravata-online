@@ -5,10 +5,11 @@ import { CardGravata } from "components/CardGravata/CardGravata";
 import { GravataCard } from "typings/card-gravata";
 import { dadosGravatas } from "utils/data-gravatas";
 import { Imagem } from "img/images";
+import { Carrossel } from "components/Carrossel/carrossel";
 
 export function IndexPage() {
   return (
-    <div className="bg-letras bg-repeat-y">
+    <div className="bg-letras bg-repeat-y ">
       <section className="w-full">
         <div className="relative">
           <div className="absolute z-20">
@@ -88,31 +89,49 @@ export function IndexPage() {
           </div>
         </div>
       </section>
-      <section className="relative">
-        <Image src={Imagem.Padrinhos} alt="Imagem Padrinhos" />
-      </section>
-      <section>
-        <div className="flex flex-col justify-center items-center">
-          <span>depoimentos</span>
-          <span>
-            Veja quantas pessoas já tiveram seus casamentos realizados com o
-            Gravata Online
-          </span>
-          <Image src={Imagem.Noivos} alt="Imagem dos Noivos" />
-          <div className="mx-80 indent-8">
-            <span className="indent-8">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et, hic
-              veniam! Quo explicabo atque obcaecati! Quis eaque dolores
-              obcaecati rerum fuga iste dolorum a pariatur. In ullam similique
-              modi delectus atque hic totam accusantium. Nisi doloremque
-              voluptates fuga, ratione, hic beatae itaque quia tempore eveniet,
-              architecto laboriosam? Neque eum sint pariatur. Maxime earum
-              doloribus aliquid sunt itaque ea asperiores architecto,
-              perferendis debitis quos deleniti soluta enim facilis voluptas,
-              tenetur, labore tempore nihil sapiente? Explicabo quaerat, itaque
-              beatae ratione labore laudantium quod consectetur incidunt,
-              blanditiis nulla aspernatur praesentium quas, iste sit?
+      <section className="  ">
+        <div className="border-[12px] relative border-white shadow-2xl  flex flex-row mx-8 ">
+          <Image src={Imagem.Padrinhos} alt="Imagem Padrinhos" />
+          <div className="absolute  gap-5 top-6 break-normal ml-7 w-[36%] mt-10 flex flex-col">
+            <span className="text-white tracking-wide font-bold text-3xl">
+              Divulgue seu grande dia e comece a receber dinheiro
             </span>
+            <span className=" tracking-wide text-pink-theme font-light text-3xl">
+              Nunca foi tão fácil arrecadar dinheiro para seu casamento
+            </span>
+            <div className="mt-10">
+              <ButtonYellow>quero arrecadar</ButtonYellow>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="mt-14">
+        <div className="flex flex-col justify-center items-center">
+          <span className="tracking-widest text-2xl font-bold text-blue-theme">
+            Depoimentos
+          </span>
+          <div className="w-[50%] flex flex-row justify-center">
+            <span className="tracking-widest w-full text-2xl mt-5 text-center text-pink-theme">
+              Veja quantas pessoas já tiveram seus casamentos realizados com o
+              Gravata Online
+            </span>
+          </div>
+          <div>
+            <Carrossel />
+          </div>
+        </div>
+      </section>
+      <section className="bg-retangulo-azul bg-cover p-20 flex flex-row justify-center items-center">
+        <div className="w-7/12 text-center gap-6 flex flex-col  justify-center items-center  ">
+          <span className="text-2xl text-blue-theme font-bold tracking-widest">
+            Não perca tempo
+          </span>
+          <span className="text-2xl text-pink-theme tracking-widest">
+            Faça seu cadastro agora mesmo e faça parte de um grupo de pessoas
+            que tiveram seu casamento realizado
+          </span>
+          <div className="w-1/3 flex justify-center">
+            <ButtonYellow>quero fazer parte</ButtonYellow>
           </div>
         </div>
       </section>

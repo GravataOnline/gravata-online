@@ -3,10 +3,16 @@ import bgImg from "/public/background-index.svg";
 import bgRosa from "/public/bg-rosa.svg";
 import bgBlue from "/public/bg-blue.svg";
 import bgBlueLight from "/public/bg-blue-light.svg";
-import bgPadrinhos from "/public/bg-padrinhos.svg";
+// import bgPadrinhos from "/public/padrinhos.png";
+import bgPadrinhos from "/public/padrinhos.jpg";
+// import bgPadrinhos from "/public/bg-padrinhos.svg";
 import Noivos from "/public/imagem-noivos.svg";
 import AspasInicio from "/public/aspas-inicio.svg";
 import AspasFim from "/public/aspas-fim.svg";
+import Noivo1 from "/public/noivos-1.jpg";
+import Noivo2 from "/public/noivos-2.jpg";
+import Noivo3 from "/public/noivos-3.jpg";
+import RetanguloAzul from "/public/retangulo-azul.svg";
 
 export const Imagem = {
   Logo: Logo,
@@ -18,4 +24,8 @@ export const Imagem = {
   Noivos,
   AspasInicio,
   AspasFim,
+  Noivo1,
+  Noivo2,
+  Noivo3,
+  RetanguloAzul,
 };
