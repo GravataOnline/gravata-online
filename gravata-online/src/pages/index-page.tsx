@@ -1,11 +1,12 @@
 import Image from "next/image";
 import MenuHamburguer from "/public/icons/menu-hamburger.svg";
 import { ButtonOutline, ButtonYellow } from "components/Button";
-import { CardGravata } from "components/CardGravata/CardGravata";
+import { CardGravata } from "components/CardGravata";
 import { GravataCard } from "typings/card-gravata";
 import { dadosGravatas } from "utils/data-gravatas";
 import { Imagem } from "img/images";
-import { Carrossel } from "components/Carrossel/carrossel";
+import { Carrossel } from "components/Carrossel";
+import { Input } from "components/Input";
 
 export function IndexPage() {
   return (
@@ -92,7 +93,7 @@ export function IndexPage() {
       <section className="  ">
         <div className="border-[12px] relative border-white shadow-2xl  flex flex-row mx-8 ">
           <Image src={Imagem.Padrinhos} alt="Imagem Padrinhos" />
-          <div className="absolute  gap-5 top-6 break-normal ml-7 w-[36%] mt-10 flex flex-col">
+          <div className="absolute gap-5 top-6 break-normal ml-7 w-[36%] mt-10 flex flex-col">
             <span className="text-white tracking-wide font-bold text-3xl">
               Divulgue seu grande dia e comece a receber dinheiro
             </span>
@@ -134,6 +135,10 @@ export function IndexPage() {
             <ButtonYellow>quero fazer parte</ButtonYellow>
           </div>
         </div>
+      </section>
+      <section className="flex flex-col justify-center items-center">
+        aaaa
+        <Input />
       </section>
     </div>
   );
