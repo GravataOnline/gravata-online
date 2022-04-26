@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         "pink-theme": "#FB626D",
         "blue-theme": "#0C455E",
+        ice: "#E7ECEF",
       },
       backgroundImage: (theme) => ({
         letras: "url('/bg-textos.svg')",

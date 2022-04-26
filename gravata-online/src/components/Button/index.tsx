@@ -23,22 +23,23 @@ export function ButtonYellow({ children, ...props }: Props) {
   );
 }
 
-// import { ButtonHTMLAttributes, DetailedHTMLProps, ReactElement } from 'react'
+type ButtonBlueProps = Props & {
+  isFullRounded?: boolean;
+};
 
-// type Props = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
-
-// export function Primary({ children, disabled, ...props }: Props): ReactElement {
-//   return (
-//     <button
-//       className="text-white border-2 button bg-primary-500 disabled:bg-gray-400 group"
-//       disabled={disabled}
-//       {...props}
-//     >
-//       <span
-//         className={`rounded-lg absolute inset-0 w-full mb-10 h-auto transition-all duration-300 ease-out transform group-hover:mb-0 ${disabled ? 'group-hover:bg-gray-600' : 'group-hover:bg-primary-600'
-//           }`}
-//       />
-//       <span className="relative tracking-wide uppercase">{children}</span>
-//     </button>
-//   )
-// }
+export function ButtonBlue({
+  children,
+  isFullRounded,
+  ...props
+}: ButtonBlueProps) {
+  return (
+    <button
+      className={`bg-cyan-900 font-bold ${
+        isFullRounded ? "rounded-full" : "rounded-lg"
+      } py-2 px-8 text-white h-full w-full  `}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}

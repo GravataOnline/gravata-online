@@ -1,6 +1,6 @@
 import Image from "next/image";
 import MenuHamburguer from "/public/icons/menu-hamburger.svg";
-import { ButtonOutline, ButtonYellow } from "components/Button";
+import { ButtonBlue, ButtonOutline, ButtonYellow } from "components/Button";
 import { CardGravata } from "components/CardGravata";
 import { GravataCard } from "typings/card-gravata";
 import { dadosGravatas } from "utils/data-gravatas";
@@ -137,8 +137,80 @@ export function IndexPage() {
         </div>
       </section>
       <section className="flex flex-col justify-center items-center">
-        aaaa
-        <Input />
+        <div className="px-80 py-28 ">
+          <div className="flex flex-col text-center">
+            <div className="text-blue-theme mb-6 font-bold text-2xl tracking-wider">
+              Fale com a gente
+            </div>
+            <div className="text-pink-theme text-2xl tracking-wider">
+              Para dúvidas ou qualquer esclarecimento,
+            </div>
+            <div className="text-pink-theme text-2xl tracking-wider">
+              basta entrar em contato, que logo retornaremos
+            </div>
+          </div>
+          <div className="grid grid-cols-12 gap-3 px-32 ">
+            <div className="col-span-12 mt-10">
+              <Input
+                typed="text"
+                name="nome"
+                placeholder="Nome"
+                autoComplete="off"
+              />
+            </div>
+            <div className="col-span-3">
+              <Input
+                typed="text"
+                name="estado"
+                placeholder="Estado"
+                autoComplete="off"
+              />
+            </div>
+            <div className="col-span-9">
+              <Input
+                typed="text"
+                name="cidade"
+                placeholder="Cidade"
+                autoComplete="off"
+              />
+            </div>
+            <div className="col-span-3">
+              <Input
+                typed="text"
+                name="ddd"
+                placeholder="DDD"
+                autoComplete="off"
+              />
+            </div>
+            <div className="col-span-9">
+              <Input
+                typed="text"
+                name="telefone"
+                placeholder="Telefone"
+                autoComplete="off"
+              />
+            </div>
+            <div className="col-span-12">
+              <Input
+                typed="text"
+                name="assunto"
+                placeholder="Assunto"
+                autoComplete="off"
+              />
+            </div>
+            <div className="col-span-12 h-56">
+              <Input
+                typed="text"
+                name="mensagem"
+                placeholder="Mensagem"
+                autoComplete="off"
+              />
+            </div>
+            <div className="col-span-12">
+              <ButtonBlue>Enviar Mensagem</ButtonBlue>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );
