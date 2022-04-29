@@ -4,9 +4,9 @@ import { ButtonBlue, ButtonOutline, ButtonYellow } from "components/Button";
 import { CardGravata } from "components/CardGravata";
 import { GravataCard } from "typings/card-gravata";
 import { dadosGravatas } from "utils/data-gravatas";
-import { Imagem } from "img/images";
+import { Imagem, Icons } from "img/images";
 import { Carrossel } from "components/Carrossel";
-import { Input } from "components/Input";
+import { Input, TextArea } from "components/Input";
 
 export function IndexPage() {
   return (
@@ -198,19 +198,72 @@ export function IndexPage() {
                 autoComplete="off"
               />
             </div>
-            <div className="col-span-12 h-56">
-              <Input
-                typed="text"
-                name="mensagem"
-                placeholder="Mensagem"
-                autoComplete="off"
-              />
+            <div className="col-span-12 h-44">
+              <TextArea name="mensagem" maxLength={5} placeholder="Mensagem" />
             </div>
+
             <div className="col-span-12">
               <ButtonBlue>Enviar Mensagem</ButtonBlue>
             </div>
           </div>
         </div>
+      </section>
+      <section className="bg-footer-theme-blue bg-cover">
+        <div className="grid grid-cols-12  py-8 ">
+          <div className="col-span-2 flex flex-col items-start">
+            <Image src={Imagem.Logo} alt="Logo Gravatas Online" height={70} />
+          </div>
+          <div className="col-span-2   text-white">
+            <span className="font-bold text-xl">Sobre</span>
+            <div className="flex flex-col gap-1 font-light">
+              <a href="#">INÍCIO</a>
+              <a href="#">QUEM SOMOS</a>
+              <a href="#">COMO FUNCIONA?</a>
+              <a href="#">BLOG</a>
+            </div>
+          </div>
+          <div className="col-span-2   text-white">
+            <span className="font-bold text-xl">Fale Conosco</span>
+            <div className="flex flex-col gap-1 font-light">
+              <a href="#">Central de Ajuda</a>
+              <a href="#">Whatsapp</a>
+              <a href="#">Contato</a>
+            </div>
+          </div>
+          <div className="col-span-2   text-white">
+            <span className="font-bold text-xl">Política</span>
+            <div className="flex flex-col gap-1 font-light">
+              <a href="#">TERMOS DE USO</a>
+              <a href="#">PRIVACIDADE</a>
+            </div>
+          </div>
+          <div className="col-span-2" />
+          <div className="col-span-2 text-white gap-7 mr-5">
+            <span className="font-bold flex justify-evenly">
+              <a href="#">ENTRAR</a> | <a href="#">CADASTRAR-SE</a>
+            </span>
+            <div className="mt-9 ml-4 ">
+              <span className="font-bold flex justify-start ">
+                Siga a gente
+              </span>
+              <div className="flex gap-6 mt-2">
+                <a href="https://facebook.com">
+                  <Image src={Icons.Facebook} alt="Logo do Facebook" />
+                </a>
+                <a href="https://instagram.com">
+                  <Image src={Icons.Instagram} alt="Logo do Facebook" />
+                </a>
+                <a href="https://outlook.com">
+                  <Image src={Icons.Email} alt="Logo do Facebook" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="bg-footer-light-blue bg-cover text-lg font-semibold text-white flex flex-row items-center p-6 justify-center">
+        Todos direitos reservados Gravata Online{" "}
+        <span className="mx-2">&#169;</span> • 2022
       </section>
     </div>
   );

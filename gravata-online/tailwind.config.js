@@ -13,6 +13,8 @@ module.exports = {
       backgroundImage: (theme) => ({
         letras: "url('/bg-textos.svg')",
         "retangulo-azul": "url('/retangulo-azul.svg')",
+        "footer-theme-blue": "url('/bg-blue-theme-footer.svg')",
+        "footer-light-blue": "url('/bg-blue-light-footer.svg')",
       }),
       boxShadow: {
         "3xl-blue": "0px 0px 40px 15px rgba(5,27,37, 0.3)",

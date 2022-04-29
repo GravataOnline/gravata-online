@@ -13,6 +13,9 @@ import Noivo1 from "/public/noivos-1.jpg";
 import Noivo2 from "/public/noivos-2.jpg";
 import Noivo3 from "/public/noivos-3.jpg";
 import RetanguloAzul from "/public/retangulo-azul.svg";
+import Facebook from "/public/icons/facebook.svg";
+import Instagram from "/public/icons/instagram.svg";
+import Email from "/public/icons/Email.svg";
 
 export const Imagem = {
   Logo: Logo,
@@ -28,4 +31,10 @@ export const Imagem = {
   Noivo2,
   Noivo3,
   RetanguloAzul,
+};
+
+export const Icons = {
+  Facebook,
+  Instagram,
+  Email,
 };
