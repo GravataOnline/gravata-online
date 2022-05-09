@@ -11,10 +11,11 @@ type TextAreaType = React.DetailedHTMLProps<
 >;
 
 type InputShape = InputType & {
-  typed: string;
+  typed: "text" | "number" | "password" | "date" | "datetime-local";
   name: string;
   placeholder: string;
   maxLength?: number;
+  color?: string;
 };
 
 export function Input({
@@ -22,6 +23,7 @@ export function Input({
   maxLength,
   name,
   placeholder,
+  color,
   ...props
 }: InputShape) {
   return (
@@ -30,9 +32,11 @@ export function Input({
       name={name}
       placeholder={placeholder}
       maxLength={maxLength}
-      className={` break-words p-4 w-full hover:scale-[1.04] outline-none focus:scale-105 transition-all 
-      .2s bg-ice border border-gray-300 text-gray-700 font-medium 
-      first-letter:uppercase rounded-lg h-full`}
+      className={` break-words rounded-bl-2xl rounded-tr-2xl rounded-br-2xl p-4 w-full hover:scale-[1.04] outline-none focus:scale-105 transition-all 
+      .2s bg-ice border border-gray-300 ${
+        color ? color : "text-gray-700"
+      } font-medium 
+      first-letter:uppercase  h-full`}
       {...props}
     />
   );
@@ -42,6 +46,7 @@ type TextAreaShape = TextAreaType & {
   name: string;
   placeholder: string;
   maxLength: number;
+  color?: string;
 };
 
 export function TextArea({
@@ -54,7 +59,7 @@ export function TextArea({
   return (
     <textarea
       className="w-full p-4 hover:scale-[1.04] outline-none focus:scale-105 transition-all 
-      .2s bg-ice border resize-none border-gray-300 text-gray-700 font-medium first-letter:uppercase rounded-lg h-full"
+      .2s bg-ice border resize-none border-gray-300 text-gray-700 font-medium first-letter:uppercase rounded-bl-2xl rounded-tr-2xl rounded-br-2xl h-full"
       name={name}
       cols={12}
       rows={12}
