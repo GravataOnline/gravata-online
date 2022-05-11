@@ -2,7 +2,6 @@ import { ButtonBlue } from "components/Button";
 import { Footer } from "components/Footer";
 import { Header } from "components/Header";
 import { Input } from "components/Input";
-import { Icons } from "img/icons";
 import { Imagem } from "img/images";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,7 +22,7 @@ export default function CadastroUsuario() {
   return (
     <div className="bg-blue-theme bg-cover w-full h-[100vh]  ">
       <Header />
-      <div className="grid grid-cols-12 gap-2 mt-24 content-center  ">
+      <div className="grid grid-cols-12 gap-2 mt-16 content-center  ">
         <div className="col-span-4 flex flex-col -mt-5 gap-3 items-start justify-start ml-16  ">
           <Image src={Imagem.Logo} alt="Logo do Gravatas Online" width={150} />
           <span className="text-white text-xl font-bold">NOVA CONTA</span>
@@ -34,7 +33,7 @@ export default function CadastroUsuario() {
             <span>mais sobre você...</span>
           </div>
         </div>
-        <div className="col-span-8 bg-letras-2 rounded-xl bg-blue-secondary flex flex-col w-[750px] relative ">
+        <div className="col-span-8 py-6 px-3 bg-letras-2 rounded-xl bg-blue-secondary flex flex-col w-[750px] relative ">
           <div className="grid grid-cols-12 gap-2 m-3 ">
             <div className="col-span-12">
               <Input
@@ -76,12 +75,16 @@ export default function CadastroUsuario() {
             </div>
             <div className="col-span-6 my-4 flex flex-row items-center justify-center gap-1">
               <input type="checkbox" name="termos" />
-              <label htmlFor="termos"> termos de uso </label>
+              <label htmlFor="termos">
+                <Link href={"termos-uso"}>termos de uso </Link>{" "}
+              </label>
               <br></br>
             </div>
             <div className="col-span-6  my-4  flex flex-row items-center justify-center gap-1">
               <input type="checkbox" name="privacidade" />
-              <label htmlFor="privacidade"> politica de privacidade </label>
+              <label htmlFor="privacidade">
+                <Link href={"termos-uso"}> politica de privacidade </Link>{" "}
+              </label>
               <br></br>
             </div>
             <div className="col-span-12">

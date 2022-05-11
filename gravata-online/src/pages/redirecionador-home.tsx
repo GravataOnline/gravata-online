@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Header } from "components/Header";
 import Logo from "/public/logo-blue.svg";
-import Calendario from "/public/icons/calendario.svg";
+import Casal from "/public/icons/casal.svg";
 import { Input } from "components/Input";
 import { ButtonOutline, ButtonWhite } from "components/Button";
 import Link from "next/link";
@@ -12,7 +12,7 @@ export default function CadastroUsuario() {
   const router = useRouter();
 
   return (
-    <div className="bg-pink-theme bg-cover w-full h-[100vh]  ">
+    <div className="bg-pink-theme bg-cover w-full min-h-[100vh] relative  ">
       <section>
         <Header />
       </section>
@@ -30,29 +30,12 @@ export default function CadastroUsuario() {
             </span>
           </div>
           <div className="col-span-2" />
-          <div className="col-span-8 bg-letras-2 bg-cover bg-pink-secondary p-2 overflow-hidden break-words">
-            <div className="w-full flex flex-col justify-center items-center p-2">
-              <Image src={Calendario} alt="logo gravatas" width={35} />
-              <span className="text-white mb-3 text-xl font-semibold tracking-wider">
-                Agora preciso saber quando vocês irão se casar...
+          <div className="col-span-8  bg-letras-2 bg-cover bg-pink-secondary p-2 overflow-hidden break-words">
+            <div className="w-full flex flex-col gap- justify-center items-center p-2">
+              <Image src={Casal} alt="logo gravatas" width={95} />
+              <span className="text-white text-center mb-3 text-2xl tracking-wider w-2/4">
+                Você será redirecionado para o planejador do seu casamento.
               </span>
-            </div>
-            <div className="w-full pb-5 flex flex-row justify-center items-center ">
-              <div className=" w-2/6 flex flex-row justify-center items-center">
-                <Input
-                  name="dtcerimonia"
-                  placeholder="digite a data da cerimônia..."
-                  typed="datetime-local"
-                />
-              </div>
-            </div>
-            <div className="w-full pb-4 gap-3 flex flex-row justify-center items-center ">
-              <ButtonOutline onClick={() => router.back()}>
-                voltar
-              </ButtonOutline>
-              <Link href={"local-cerimonia"}>
-                <ButtonWhite isFullRounded>salvar</ButtonWhite>
-              </Link>
             </div>
           </div>
           <div className="col-span-2" />
