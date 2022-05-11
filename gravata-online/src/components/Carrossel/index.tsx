@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Imagem } from "img/images";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const DepoimentoNoivos = [
   {
@@ -20,12 +20,32 @@ const DepoimentoNoivos = [
   },
 ];
 
+let count = 0;
+
 export function Carrossel() {
   const [imagemAtual, setImagemAtual] = useState<number>(0);
+  const carrousselRef = useRef(null);
 
   function handleChangeCarroussel(index: number) {
     setImagemAtual(index);
   }
+
+  function handleChangeDepoimentos() {
+    count = (count + 1) % DepoimentoNoivos.length;
+    console.log("count", count);
+    setImagemAtual(count);
+  }
+
+  function startSlide() {
+    setInterval(() => {
+      handleChangeDepoimentos();
+    }, 3000);
+  }
+
+  useEffect(() => {
+    startSlide();
+  }, []);
+
   return (
     <div className="w-full mt-10 grid grid-cols-12 select-none gap-4 justify-center relative">
       <div className="col-span-12 my-4 flex flex-row justify-center">
@@ -44,7 +64,10 @@ export function Carrossel() {
       <div className="col-span-3 flex flex-col justify-start items-end px-14">
         <Image src={Imagem.AspasInicio} alt="Imagem de Asoas" />
       </div>
-      <div className="col-span-6 text-center h-48 flex items-center overflow-hidden justify-center ">
+      <div
+        ref={carrousselRef}
+        className="col-span-6 text-center h-48 flex items-center overflow-hidden justify-center "
+      >
         <span className="indent-8 italic text-2xl text-blue-theme ">
           {DepoimentoNoivos[imagemAtual].depoimento}
         </span>

@@ -6,10 +6,11 @@ interface FooterProps {
   isPink?: boolean;
   isIcons?: boolean;
 }
+
 export function Footer({ isPink, isIcons }: FooterProps) {
   return (
     <footer
-      className={`absolute bottom-0 mb-0 left-0 w-[100vw] h-14 flex flex-row text-white items-center justify-center ${
+      className={`absolute bottom-0 mb-0 left-0 w-[100%] h-14 flex flex-row text-white items-center justify-center ${
         isPink ? "bg-pink-theme" : "bg-blue-theme"
       }`}
     >

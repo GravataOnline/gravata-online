@@ -15,7 +15,7 @@ export function IndexPage() {
   const funcionamento = useRef(null);
 
   return (
-    <div className="bg-letras bg-repeat-y ">
+    <div className="bg-letras bg-repeat-y relative ">
       <section className="w-full" id="inicio">
         <div className="relative">
           <div className="absolute z-20">
@@ -44,8 +44,10 @@ export function IndexPage() {
                 alt="Menu Hamburguer"
                 className="cursor-pointer"
               />
-              <p className="uppercase tracking-wider font-extralight text-lg text-white ">
-                <a href="">Entrar</a> | <a href="">Cadastrar</a>
+              <p className="uppercase tracking-wider self-center font-extralight text-lg text-white ">
+                <Link href={"login"}>Entrar</Link> |{" "}
+                <Link href={"cadastro-usuario"}>Cadastrar</Link>
+                {/* <a href="">Entrar</a> | <a href="">Cadastrar</a> */}
               </p>
             </div>
             <div className="flex w-full justify-center flex-col items-center absolute top-28 z-50">
@@ -87,12 +89,13 @@ export function IndexPage() {
             </span>
           </div>
           <div className="grid grid-cols-12 gap-2 justify-center items-center">
-            {dadosGravatas.map((x: GravataCard) => (
+            {dadosGravatas.map((x: GravataCard, index: number) => (
               <div className="col-span-12 xl:col-span-3 sm:col-span-12  lg:col-span-6  xl:odd:mb-28">
                 <CardGravata
                   descricao={x.descricao}
                   titulo={x.titulo}
                   key={x.descricao}
+                  index={index}
                 />
               </div>
             ))}
