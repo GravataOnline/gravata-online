@@ -4,14 +4,19 @@ import { ButtonBlue, ButtonOutline, ButtonYellow } from "components/Button";
 import { CardGravata } from "components/CardGravata";
 import { GravataCard } from "typings/card-gravata";
 import { dadosGravatas } from "utils/data-gravatas";
-import { Imagem, Icons } from "img/images";
+import { Imagem } from "img/images";
+import { Icons } from "img/icons";
 import { Carrossel } from "components/Carrossel";
 import { Input, TextArea } from "components/Input";
+import Link from "next/link";
+import { useRef } from "react";
 
 export function IndexPage() {
+  const funcionamento = useRef(null);
+
   return (
     <div className="bg-letras bg-repeat-y ">
-      <section className="w-full">
+      <section className="w-full" id="inicio">
         <div className="relative">
           <div className="absolute z-20">
             <Image
@@ -59,14 +64,18 @@ export function IndexPage() {
                 </span>
               </div>
               <div className="flex flex-row mt-12 gap-3">
-                <ButtonOutline>Tá, mas como funciona?</ButtonOutline>
-                <ButtonYellow>Quero arrecadar</ButtonYellow>
+                <Link href={"#funcionamento"}>
+                  <ButtonOutline>Tá, mas como funciona?</ButtonOutline>
+                </Link>
+                <Link href={"cadastro-usuario"}>
+                  <ButtonYellow>Quero arrecadar</ButtonYellow>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section>
+      <section id="funcionamento">
         <div className="relative">
           <div className="flex flex-col w-auto mx-12 my-6">
             <span className="font-bold text-blue-theme text-3xl">
@@ -101,7 +110,9 @@ export function IndexPage() {
               Nunca foi tão fácil arrecadar dinheiro para seu casamento
             </span>
             <div className="mt-10">
-              <ButtonYellow>quero arrecadar</ButtonYellow>
+              <Link href={"cadastro-usuario"}>
+                <ButtonYellow>quero arrecadar</ButtonYellow>
+              </Link>
             </div>
           </div>
         </div>
@@ -132,7 +143,9 @@ export function IndexPage() {
             que tiveram seu casamento realizado
           </span>
           <div className="w-1/3 flex justify-center">
-            <ButtonYellow>quero fazer parte</ButtonYellow>
+            <Link href={"cadastro-usuario"}>
+              <ButtonYellow>quero fazer parte</ButtonYellow>
+            </Link>
           </div>
         </div>
       </section>

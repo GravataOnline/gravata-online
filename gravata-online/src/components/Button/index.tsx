@@ -6,7 +6,7 @@ type Props = DetailedHTMLProps<
 
 export function ButtonOutline({ children, ...props }: Props) {
   return (
-    <button className="border rounded-full py-2 px-4 text-white" {...props}>
+    <button className="border-2 rounded-full py-2 px-6 text-white" {...props}>
       {children}
     </button>
   );
@@ -15,7 +15,7 @@ export function ButtonOutline({ children, ...props }: Props) {
 export function ButtonYellow({ children, ...props }: Props) {
   return (
     <button
-      className="bg-yellow-600 font-bold rounded-full py-2 px-8 text-neutral-800"
+      className="bg-yellow-600 font-bold rounded-full py-2 px-6 text-neutral-800"
       {...props}
     >
       {children}
@@ -36,7 +36,24 @@ export function ButtonBlue({
     <button
       className={`bg-cyan-900 font-bold ${
         isFullRounded ? "rounded-full" : "rounded-lg"
-      } py-2 px-8 text-white h-full w-full  `}
+      } py-2 px-6 text-white h-full w-full  `}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
+
+export function ButtonWhite({
+  children,
+  isFullRounded,
+  ...props
+}: ButtonBlueProps) {
+  return (
+    <button
+      className={`bg-white border-2  font-bold ${
+        isFullRounded ? "rounded-full" : "rounded-lg"
+      } py-2 px-6 text-pink-theme  `}
       {...props}
     >
       {children}
