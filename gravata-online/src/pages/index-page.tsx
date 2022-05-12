@@ -10,6 +10,7 @@ import { Carrossel } from "components/Carrossel";
 import { Input, TextArea } from "components/Input";
 import Link from "next/link";
 import { useRef } from "react";
+import { Header } from "components/Header";
 
 export function IndexPage() {
   const funcionamento = useRef(null);
@@ -38,17 +39,8 @@ export function IndexPage() {
             <Image src={Imagem.FundoAzul} alt="Imagem de fundo azul escuro" />
           </div>
           <div className="flex flex-col top-0 z-50 ">
-            <div className="flex w-full p-10  border-none justify-between flex-row absolute top-0 z-50">
-              <Image
-                src={MenuHamburguer}
-                alt="Menu Hamburguer"
-                className="cursor-pointer"
-              />
-              <p className="uppercase tracking-wider self-center font-extralight text-lg text-white ">
-                <Link href={"login"}>Entrar</Link> |{" "}
-                <Link href={"cadastro-usuario"}>Cadastrar</Link>
-                {/* <a href="">Entrar</a> | <a href="">Cadastrar</a> */}
-              </p>
+            <div className="flex w-full justify-between flex-row absolute top-0 z-50">
+              <Header noArrow />
             </div>
             <div className="flex w-full justify-center flex-col items-center absolute top-28 z-50">
               <Image
