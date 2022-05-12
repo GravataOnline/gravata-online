@@ -7,10 +7,28 @@ import Calendario from "/public/icons/calendario.svg";
 import { Input } from "components/Input";
 import { ButtonOutline, ButtonWhite } from "components/Button";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import * as yup from "yup";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup
+  .object()
+  .shape({
+    nome: yup.string().required(),
+  })
+  .required();
 
 export default function CadastroUsuario() {
   const router = useRouter();
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   return (
     <div className="bg-pink-theme bg-cover w-full h-[100vh]  ">
       <section>
@@ -43,6 +61,15 @@ export default function CadastroUsuario() {
                   name="dtcerimonia"
                   placeholder="digite a data da cerimônia..."
                   typed="datetime-local"
+                  register={register}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="nome"
+                  render={({ message }) => {
+                    console.log(message);
+                    return <p>{message}</p>;
+                  }}
                 />
               </div>
             </div>
