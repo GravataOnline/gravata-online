@@ -32,7 +32,6 @@ export function Carrossel() {
 
   function handleChangeDepoimentos() {
     count = (count + 1) % DepoimentoNoivos.length;
-    console.log("count", count);
     setImagemAtual(count);
   }
 

@@ -6,24 +6,36 @@ import { useState } from "react";
 import Noivo from "/public/icons/noivo.svg";
 import Noiva from "/public/icons/noiva.svg";
 
-export function Header() {
+interface HeaderProps {
+  noArrow?: boolean;
+}
+
+export function Header({ noArrow }: HeaderProps) {
   const router = useRouter();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isNoiva, setIsNoiva] = useState<boolean>(false);
 
   return (
     <>
-      <div className="h-10 p-5  flex flex-row justify-between items-center w-full ">
+      <div
+        className={`h-10 p-5 flex flex-row ${
+          !noArrow ? "justify-between" : "justify-end"
+        } items-center w-full `}
+      >
         <div
           onClick={() => router.back()}
           className="cursor-pointer mt-2 -ml-2"
         >
-          <Image
-            src={Icons.ArrowLeft}
-            alt="Seta para esquerda"
-            height={35}
-            width={45}
-          />
+          {!noArrow ? (
+            <Image
+              src={Icons.ArrowHeader}
+              alt="Seta para esquerda"
+              height={35}
+              width={45}
+            />
+          ) : (
+            <></>
+          )}
         </div>
 
         {!isLogged ? (

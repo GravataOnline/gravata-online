@@ -7,6 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import api from "./api/http-common";
 
 interface Conjuge {
   nome: string;
@@ -18,6 +20,11 @@ export default function CadastroUsuario() {
   const router = useRouter();
   const [conjuge1, setConjuge1] = useState<Conjuge>();
   const [conjuge2, setConjuge2] = useState<Conjuge>();
+  const { handleSubmit } = useForm();
+
+  function handleSubmitForm(data: any) {
+    console.log({ data });
+  }
 
   return (
     <div className="bg-blue-theme bg-cover w-full h-[100vh]  ">
@@ -34,65 +41,70 @@ export default function CadastroUsuario() {
           </div>
         </div>
         <div className="col-span-8 py-6 px-3 bg-letras-2 rounded-xl bg-blue-secondary flex flex-col w-[750px] relative ">
-          <div className="grid grid-cols-12 gap-2 m-3 ">
-            <div className="col-span-12">
-              <Input
-                name="nome"
-                placeholder="digite aqui seu nome..."
-                typed="text"
-              />
+          <form onSubmit={handleSubmit(handleSubmitForm)}>
+            <div className="grid grid-cols-12 gap-2 m-3 ">
+              <div className="col-span-12">
+                <Input
+                  name="nome"
+                  placeholder="digite aqui seu nome..."
+                  typed="text"
+                />
+              </div>
+              <div className="col-span-6">
+                <Input name="email" placeholder="seu e-mail..." typed="text" />
+              </div>
+              <div className="col-span-6">
+                <Input
+                  name="telefone"
+                  placeholder="seu telefone com DDD..."
+                  typed="text"
+                />
+              </div>
+              <div className="col-span-12">
+                <Input
+                  name="nomeconjuge"
+                  placeholder="me fale o nome do seu amor..."
+                  typed="text"
+                />
+              </div>
+              <div className="col-span-6">
+                <Input
+                  name="emailconjuge"
+                  placeholder="agora o e-email do seu amor..."
+                  typed="text"
+                />
+              </div>
+              <div className="col-span-6">
+                <Input
+                  name="telefoneconjuge"
+                  placeholder="telefone do seu amor..."
+                  typed="text"
+                />
+              </div>
+              <div className="col-span-6 my-4 flex flex-row items-center justify-center gap-1">
+                <input type="checkbox" name="termos" />
+                <label htmlFor="termos">
+                  <Link href={"termos-uso"}>termos de uso </Link>
+                </label>
+                <br></br>
+              </div>
+              <div className="col-span-6  my-4  flex flex-row items-center justify-center gap-1">
+                <input type="checkbox" name="privacidade" />
+                <label htmlFor="privacidade">
+                  <Link href={"politica-privacidade"}>
+                    politica de privacidade
+                  </Link>
+                </label>
+                <br></br>
+              </div>
+              <div className="col-span-12">
+                <ButtonBlue isFullRounded type="submit">
+                  avançar
+                </ButtonBlue>
+                {/* <Link href={"identificacao-usuario"}></Link> */}
+              </div>
             </div>
-            <div className="col-span-6">
-              <Input name="email" placeholder="seu e-mail..." typed="text" />
-            </div>
-            <div className="col-span-6">
-              <Input
-                name="telefone"
-                placeholder="seu telefone com DDD..."
-                typed="text"
-              />
-            </div>
-            <div className="col-span-12">
-              <Input
-                name="nomeconjuge"
-                placeholder="me fale o nome do seu amor..."
-                typed="text"
-              />
-            </div>
-            <div className="col-span-6">
-              <Input
-                name="emailconjuge"
-                placeholder="agora o e-email do seu amor..."
-                typed="text"
-              />
-            </div>
-            <div className="col-span-6">
-              <Input
-                name="telefoneconjuge"
-                placeholder="telefone do seu amor..."
-                typed="text"
-              />
-            </div>
-            <div className="col-span-6 my-4 flex flex-row items-center justify-center gap-1">
-              <input type="checkbox" name="termos" />
-              <label htmlFor="termos">
-                <Link href={"termos-uso"}>termos de uso </Link>{" "}
-              </label>
-              <br></br>
-            </div>
-            <div className="col-span-6  my-4  flex flex-row items-center justify-center gap-1">
-              <input type="checkbox" name="privacidade" />
-              <label htmlFor="privacidade">
-                <Link href={"termos-uso"}> politica de privacidade </Link>{" "}
-              </label>
-              <br></br>
-            </div>
-            <div className="col-span-12">
-              <Link href={"identificacao-usuario"}>
-                <ButtonBlue isFullRounded>avançar</ButtonBlue>
-              </Link>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
 
