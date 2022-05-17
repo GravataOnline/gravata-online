@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.8.8",
     "axios": "^0.27.2",
@@ -16,12 +19,14 @@
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-hook-form": "^7.31.0",
+    "react-input-mask": "^2.0.4",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "17.0.24",
     "@types/react": "18.0.5",
     "@types/react-dom": "18.0.1",
+    "@types/react-input-mask": "^3.0.1",
     "autoprefixer": "^10.4.4",
     "eslint": "8.13.0",
     "eslint-config-next": "12.1.5",

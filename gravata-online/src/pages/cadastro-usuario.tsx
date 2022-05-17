@@ -1,7 +1,7 @@
 import { ButtonBlue } from "components/Button";
 import { Footer } from "components/Footer";
 import { Header } from "components/Header";
-import { Input } from "components/Input";
+import { CheckBox, Input, InputMasked } from "components/Input";
 import { Imagem } from "img/images";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,10 +10,17 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import api from "./api/http-common";
-import { ErrorMessage } from "@hookform/error-message";
-import * as yup from "yup";
+import yup from "utils/yup";
+import { ErrorMessage } from "components/ErrorMessage";
+import ReactInputMask from "react-input-mask";
 
-interface FormData {
+interface Conjuge {
+  nome: string;
+  email: string;
+  celular: string;
+}
+
+interface FormValues {
   nome: string;
   telefone: string;
   email: string;
@@ -22,63 +29,55 @@ interface FormData {
   emailconjuge: string;
 }
 
-interface Conjuge {
-  nome: string;
-  email: string;
-  celular: string;
-}
-
-const schema = yup
-  .object()
-  .shape({
-    nome: yup.string().required(),
-    telefone: yup.string().required(),
-    email: yup.string().required(),
-    nomeconjuge: yup.string().required(),
-    telefoneconjuge: yup.string().required(),
-    emailconjuge: yup.string().required(),
-  })
-  .required();
+const schema = yup.object().shape({
+  nome: yup.string().required(),
+  telefone: yup.string().required(),
+  email: yup
+    .string()
+    .required()
+    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Formato de e-mail inválido"),
+  nomeconjuge: yup.string().required(),
+  telefoneconjuge: yup.string().required(),
+  emailconjuge: yup
+    .string()
+    .required()
+    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Formato de e-mail inválido"),
+});
 
 export default function CadastroUsuario() {
   const router = useRouter();
   const [conjuge1, setConjuge1] = useState<Conjuge>();
   const [conjuge2, setConjuge2] = useState<Conjuge>();
-  const [formData, setFormData] = useState<FormData>({
-    email: "",
-    emailconjuge: "",
-    nome: "",
-    nomeconjuge: "",
-    telefone: "",
-    telefoneconjuge: "",
-  });
+  const [isCheckedTermos, setIsCheckedTermos] = useState(false);
+  const handleChangeA = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsCheckedTermos(e.target.checked);
+    console.log(e);
+  };
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm({
+    formState: { errors, isValid },
+    getValues,
+  } = useForm<FormValues>({
+    defaultValues: {
+      nome: "",
+      telefone: "",
+      email: "",
+      nomeconjuge: "",
+      telefoneconjuge: "",
+      emailconjuge: "",
+    },
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: any) => {
-    let { nome, email, telefone, nomeconjuge, emailconjuge, telefoneconjuge } =
-      data;
-    setFormData({
-      email,
-      telefone,
-      nomeconjuge,
-      emailconjuge,
-      telefoneconjuge,
-      nome,
-    });
-    console.log("data", data.email);
-  };
+  const onSubmit = (data: any) => {};
 
   return (
-    <div className="bg-blue-theme bg-cover w-full h-[100vh]">
+    <div className="bg-blue-theme bg-cover w-full min-h-screen">
       <Header />
-      <form onChange={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-12 gap-2 mt-16 content-center  ">
           <div className="col-span-4 flex flex-col -mt-5 gap-3 items-start justify-start ml-16  ">
             <Image
@@ -103,13 +102,15 @@ export default function CadastroUsuario() {
                   typed="text"
                   register={register}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="nome"
-                  render={({ message }) => {
-                    console.log(message);
-                    return <p>{message}</p>;
-                  }}
+                <ErrorMessage error={errors.nome} />
+              </div>
+              <div className="col-span-6">
+                <CheckBox
+                  handleChange={handleChangeA}
+                  isChecked={isCheckedTermos}
+                  label="adasdsad"
+                  name="asdasd"
+                  // onChange={(e) => console.log(e)}
                 />
               </div>
               <div className="col-span-6">
@@ -119,16 +120,17 @@ export default function CadastroUsuario() {
                   typed="text"
                   register={register}
                 />
-                <p>{errors.email?.message}</p>
+                <ErrorMessage error={errors.email} />
               </div>
               <div className="col-span-6">
-                <Input
+                <InputMasked
+                  mask="(99) 99999-9999"
                   name="telefone"
                   placeholder="seu telefone com DDD..."
                   typed="text"
                   register={register}
                 />
-                <p>{errors.telefone?.message}</p>
+                <ErrorMessage error={errors.telefone} />
               </div>
               <div className="col-span-12">
                 <Input
@@ -137,7 +139,7 @@ export default function CadastroUsuario() {
                   typed="text"
                   register={register}
                 />
-                <p>{errors.nomeconjuge?.message}</p>
+                <ErrorMessage error={errors.nomeconjuge} />
               </div>
               <div className="col-span-6">
                 <Input
@@ -146,16 +148,17 @@ export default function CadastroUsuario() {
                   typed="text"
                   register={register}
                 />
-                <p>{errors.emailconjuge?.message}</p>
+                <ErrorMessage error={errors.emailconjuge} />
               </div>
               <div className="col-span-6">
-                <Input
+                <InputMasked
+                  mask="(99) 99999-9999"
                   name="telefoneconjuge"
                   placeholder="telefone do seu amor..."
                   typed="text"
                   register={register}
                 />
-                <p>{errors.telefoneconjuge?.message}</p>
+                <ErrorMessage error={errors.telefoneconjuge} />
               </div>
               <div className="col-span-6 my-4 flex flex-row items-center justify-center gap-1">
                 <input type="checkbox" name="termos" />
@@ -178,11 +181,11 @@ export default function CadastroUsuario() {
                   href={{
                     pathname: "identificacao-usuario",
                     query: {
-                      object: JSON.stringify(formData),
+                      object: JSON.stringify(getValues()),
                     },
                   }}
                 >
-                  <ButtonBlue isFullRounded type="submit">
+                  <ButtonBlue isFullRounded type="submit" disabled={!isValid}>
                     avançar
                   </ButtonBlue>
                 </Link>

@@ -29,6 +29,7 @@ const schema = yup
 
 export default function CadastroUsuario() {
   const router = useRouter();
+  console.log("router", router.query?.object);
   const {
     register,
     handleSubmit,
