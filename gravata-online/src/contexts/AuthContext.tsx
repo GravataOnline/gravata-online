@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { setCookie, parseCookies } from "nookies";
-import { v4 as uuid } from "uuid";
-import api from "pages/api/http-common";
 import Router from "next/router";
+import jwt_decode from "jwt-decode";
+import { api } from "pages/api/http-common";
 
 type AuthContextData = {
   isAuthenticated: boolean;
@@ -24,16 +24,33 @@ type SignInData = {
   password: string;
 };
 
-const tokenId = uuid();
+let tokenId = "";
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<User | null>(null);
   const isAuthenticated: boolean = !!user;
 
+  async function getUserByToken(id: number) {
+    await api
+      .request({
+        url: "/User/get-user-by-id",
+        method: "GET",
+        params: {
+          id,
+        },
+      })
+      .then((response) => {
+        setUser(response.data);
+      });
+  }
+
   useEffect(() => {
     const { "gravata-token": token } = parseCookies();
-    // if(token)
+    if (token) {
+      let { idusuario: id } = jwt_decode(token) as any;
+      if (token) getUserByToken(id);
+    }
   }, []);
 
   async function signIn({ email, password }: SignInData) {
@@ -48,10 +65,13 @@ export function AuthProvider({ children }: any) {
 
     const result = message?.data?.message;
 
-    setCookie(undefined, "gravata-token", tokenId, {
+    setCookie(undefined, "gravata-token", result.token, {
       //instalei as dependencias do cookie p ter acesso as props => npm add @types/cookie -D
       maxAge: 60 * 60 * 1, //qnt tempo o cookie vai durar - em segundos = 1 hora
     });
+
+    api.defaults.headers.common["Authorization"] = `Bearer ${result.token}`;
+    console.log("result.token", result.token);
 
     setUser({
       conjuge: result.conjuge,
@@ -59,7 +79,7 @@ export function AuthProvider({ children }: any) {
       id: result.id,
       name: result.name,
       tipousuario: result.tipousuario,
-      token: tokenId,
+      token: result.token,
     });
 
     Router.push("/home");
