@@ -63,3 +63,14 @@ export function ButtonWhite({
     </button>
   );
 }
+
+export function ButtonPink({ children, ...props }: Props) {
+  return (
+    <button
+      className="bg-pink-theme min-w-[200px] disabled:bg-gray-600 disabled:cursor-not-allowed font-bold rounded-full py-2 px-6 text-white"
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}

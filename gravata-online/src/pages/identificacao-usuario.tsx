@@ -11,35 +11,51 @@ import Noiva from "/public/icons/noiva.svg";
 import { useState } from "react";
 import { Header } from "components/Header";
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { FormValues } from "typings/form-cadastro";
+import { ParsedUrlQuery } from "querystring";
+import { ErrorMessage } from "components/ErrorMessage";
+import yup from "utils/yup";
+import api from "./api/http-common";
+import { useToasts } from "react-toast-notifications";
 
 const schema = yup
   .object()
   .shape({
-    senha: yup.string().required(),
+    senha: yup
+      .string()
+      .required()
+      .min(8)
+      .matches(
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
+        "Deve conter uma letra minúscula, uma maiúscula e um caracter especial"
+      ),
     confSenha: yup
       .string()
-      .test("passwords-match", "Passwords must match", function (value) {
-        return this.parent.password === value;
-      }),
+      .oneOf([yup.ref("senha"), null], "As senhas não coincidem"),
   })
   .required();
 
 export default function CadastroUsuario() {
   const router = useRouter();
-  console.log("router", router.query?.object);
+  const { addToast } = useToasts();
+  const [dadosNoivos, setDadosNoivos] = useState<ParsedUrlQuery>(router.query);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid, isSubmitting },
   } = useForm({
+    defaultValues: {
+      senha: "",
+      confSenha: "",
+    },
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
-  console.log("errors", errors);
   const [conjuge1IsNoivo, setConjuge1IsNoivo] = useState<boolean>(false);
+  // console.log("conjuge1IsNoivo", conjuge1IsNoivo);
   const [conjuge2IsNoivo, setConjuge2IsNoivo] = useState<boolean>(false);
+  // console.log("conjuge2IsNoivo", conjuge2IsNoivo);
 
   function setConjuges1() {
     setConjuge1IsNoivo(!conjuge1IsNoivo);
@@ -49,13 +65,45 @@ export default function CadastroUsuario() {
     setConjuge2IsNoivo(!conjuge2IsNoivo);
   }
 
-  function onSubmit(data: any) {
-    console.log("data", data);
+  async function onSubmit(data: any) {
+    try {
+      await api.request({
+        url: "/User/create",
+        method: "POST",
+        data: {
+          user: {
+            name: router.query.nome,
+            email: router.query.email,
+            password: data.senha,
+            phone: router.query.telefone,
+            usertype: 1, //admin ou usuario comum
+            spouse: conjuge1IsNoivo ? 1 : 2, //1 marido 2 mulher
+          },
+          spouse: {
+            name: router.query.nomeconjuge,
+            email: router.query.emailconjuge,
+            password: "092019021",
+            phone: router.query.telefoneconjuge,
+            usertype: 2,
+            spouse: conjuge2IsNoivo ? 1 : 2,
+          },
+        },
+      });
+      addToast("Cadastro realizado com sucesso", { appearance: "success" });
+      router.push({
+        pathname: "/local-cerimonia",
+        query: {
+          confirmacao: true,
+        },
+      });
+    } catch (error: any) {
+      addToast(error.response.data.message, { appearance: "error" });
+    }
   }
   return (
-    <div className="bg-blue-theme bg-cover w-full h-[100vh]  ">
-      <Header />
-      <form action="" onChange={handleSubmit(onSubmit)}>
+    <div className="bg-blue-theme bg-cover w-full min-h-screen relative  ">
+      <Header.Primary />
+      <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-12 gap-2 items-center  ">
           <div className="col-span-4 flex flex-col -mt-5 gap-3 items-start justify-start ml-16  ">
             <Image
@@ -71,11 +119,11 @@ export default function CadastroUsuario() {
               <span>mais sobre você...</span>
             </div>
           </div>
-          <div className="col-span-8 bg-letras-2 rounded-xl mt-10 bg-blue-secondary flex flex-col w-[750px] relative ">
+          <div className="col-span-8 bg-letras-2 rounded-xl mt-10 bg-blue-secondary flex flex-col max-w-[750px] relative ">
             <div className="grid grid-cols-12 gap-5 m-3 py-6 px-3">
               <div className="col-span-12 flex flex-col py-2 px-4 bg-white rounded-bl-2xl rounded-tr-2xl rounded-br-2xl">
                 <div className="h-1/3 text-blue-theme text-lg">
-                  <span className="font-bold">José Marcos Silva, </span>{" "}
+                  <span className="font-bold">{router.query.nome}, </span>{" "}
                   <span>você é...</span>
                 </div>
                 <div className="h-2/3 flex flex-row my-3 justify-center gap-7">
@@ -101,7 +149,9 @@ export default function CadastroUsuario() {
               </div>
               <div className="col-span-12 flex flex-col py-2 px-4 bg-white rounded-bl-2xl rounded-tr-2xl rounded-br-2xl">
                 <div className="h-1/3 text-blue-theme text-lg">
-                  <span className="font-bold">Maria Alice Gonçalves, </span>{" "}
+                  <span className="font-bold">
+                    {router.query.nomeconjuge},{" "}
+                  </span>{" "}
                   <span>você é...</span>
                 </div>
                 <div className="h-2/3 flex flex-row my-3 justify-center gap-7">
@@ -132,11 +182,7 @@ export default function CadastroUsuario() {
                   typed="password"
                   register={register}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="senha"
-                  render={({ message }) => <p>{message}</p>}
-                />
+                <ErrorMessage error={errors.senha} />
               </div>
               <div className="col-span-6">
                 <Input
@@ -145,16 +191,18 @@ export default function CadastroUsuario() {
                   typed="password"
                   register={register}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="confSenha"
-                  render={({ message }) => <p>{message}</p>}
-                />
+                <ErrorMessage error={errors.confSenha} />
               </div>
               <div className="col-span-12">
-                <Link href={"data-cerimonia"}>
-                  <ButtonBlue isFullRounded>Avançar</ButtonBlue>
-                </Link>
+                {/* <Link href={"data-cerimonia"}> */}
+                <ButtonBlue
+                  type="submit"
+                  isFullRounded
+                  disabled={!isValid || isSubmitting}
+                >
+                  Avançar
+                </ButtonBlue>
+                {/* </Link> */}
               </div>
             </div>
           </div>

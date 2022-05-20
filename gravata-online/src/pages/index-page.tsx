@@ -26,7 +26,6 @@ const schema = yup.object().shape({
 });
 
 export function IndexPage() {
-  const funcionamento = useRef(null);
   const {
     register,
     handleSubmit,
@@ -35,8 +34,8 @@ export function IndexPage() {
     resolver: yupResolver(schema),
   });
 
-  function submitting(data: any) {
-    console.log({ data });
+  function submitForm(data: any) {
+    console.log(data);
   }
 
   return (
@@ -64,7 +63,7 @@ export function IndexPage() {
           </div>
           <div className="flex flex-col top-0 z-50 ">
             <div className="flex w-full justify-between flex-row absolute top-0 z-50">
-              <Header noArrow />
+              <Header.Primary noArrow />
             </div>
             <div className="flex w-full justify-center flex-col items-center absolute top-28 z-50">
               <Image
@@ -181,7 +180,7 @@ export function IndexPage() {
               basta entrar em contato, que logo retornaremos
             </div>
           </div>
-          <form onSubmit={handleSubmit(submitting)}>
+          <form onSubmit={handleSubmit(submitForm)}>
             <div className="grid grid-cols-12 gap-3 px-32 ">
               <div className="col-span-12 mt-10">
                 <Input
@@ -247,7 +246,7 @@ export function IndexPage() {
               </div>
 
               <div className="col-span-12">
-                <ButtonBlue>Enviar Mensagem</ButtonBlue>
+                <ButtonBlue type="submit">Enviar Mensagem</ButtonBlue>
               </div>
             </div>
           </form>

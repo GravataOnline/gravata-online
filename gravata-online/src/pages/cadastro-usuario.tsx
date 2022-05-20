@@ -13,20 +13,12 @@ import api from "./api/http-common";
 import yup from "utils/yup";
 import { ErrorMessage } from "components/ErrorMessage";
 import ReactInputMask from "react-input-mask";
+import { FormValues } from "typings/form-cadastro";
 
 interface Conjuge {
   nome: string;
   email: string;
   celular: string;
-}
-
-interface FormValues {
-  nome: string;
-  telefone: string;
-  email: string;
-  nomeconjuge: string;
-  telefoneconjuge: string;
-  emailconjuge: string;
 }
 
 const schema = yup.object().shape({
@@ -46,14 +38,7 @@ const schema = yup.object().shape({
 
 export default function CadastroUsuario() {
   const router = useRouter();
-  const [conjuge1, setConjuge1] = useState<Conjuge>();
-  const [conjuge2, setConjuge2] = useState<Conjuge>();
-  const [isCheckedTermos, setIsCheckedTermos] = useState(false);
-  const handleChangeA = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsCheckedTermos(e.target.checked);
-    console.log(e);
-  };
-
+  const [telefoneConjuge2, setTelefoneConjuge2] = useState<string>("");
   const {
     register,
     handleSubmit,
@@ -68,15 +53,17 @@ export default function CadastroUsuario() {
       telefoneconjuge: "",
       emailconjuge: "",
     },
-    mode: "onChange",
+    mode: "all",
     resolver: yupResolver(schema),
   });
+  // console.warn(getValues());
 
   const onSubmit = (data: any) => {};
+  // console.log("errors", errors);
 
   return (
     <div className="bg-blue-theme bg-cover w-full min-h-screen">
-      <Header />
+      <Header.Primary />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-12 gap-2 mt-16 content-center  ">
           <div className="col-span-4 flex flex-col -mt-5 gap-3 items-start justify-start ml-16  ">
@@ -103,15 +90,6 @@ export default function CadastroUsuario() {
                   register={register}
                 />
                 <ErrorMessage error={errors.nome} />
-              </div>
-              <div className="col-span-6">
-                <CheckBox
-                  handleChange={handleChangeA}
-                  isChecked={isCheckedTermos}
-                  label="adasdsad"
-                  name="asdasd"
-                  // onChange={(e) => console.log(e)}
-                />
               </div>
               <div className="col-span-6">
                 <Input
@@ -157,31 +135,39 @@ export default function CadastroUsuario() {
                   placeholder="telefone do seu amor..."
                   typed="text"
                   register={register}
+                  onChange={(e) => setTelefoneConjuge2(e.target.value)}
                 />
                 <ErrorMessage error={errors.telefoneconjuge} />
               </div>
-              <div className="col-span-6 my-4 flex flex-row items-center justify-center gap-1">
-                <input type="checkbox" name="termos" />
-                <label htmlFor="termos">
-                  <Link href={"termos-uso"}>termos de uso </Link>
-                </label>
-                <br></br>
-              </div>
-              <div className="col-span-6  my-4  flex flex-row items-center justify-center gap-1">
-                <input type="checkbox" name="privacidade" />
-                <label htmlFor="privacidade">
+              <div className="col-span-12 my-4 flex flex-row items-center justify-center gap-1">
+                <span>
+                  Ao prosseguir, você concorda com os{" "}
+                  <Link href={"termos-uso"}>
+                    <span className="font-bold cursor-pointer text-cyan-900">
+                      termos de uso
+                    </span>
+                  </Link>{" "}
+                  e com a{" "}
                   <Link href={"politica-privacidade"}>
-                    politica de privacidade
+                    <span className="font-bold cursor-pointer text-cyan-900">
+                      {" "}
+                      politica de privacidade{" "}
+                    </span>
                   </Link>
-                </label>
-                <br></br>
+                </span>
               </div>
+
               <div className="col-span-12">
                 <Link
                   href={{
                     pathname: "identificacao-usuario",
                     query: {
-                      object: JSON.stringify(getValues()),
+                      nome: getValues().nome,
+                      nomeconjuge: getValues().nomeconjuge,
+                      email: getValues().email,
+                      emailconjuge: getValues().emailconjuge,
+                      telefone: getValues().telefone,
+                      telefoneconjuge: telefoneConjuge2,
                     },
                   }}
                 >
