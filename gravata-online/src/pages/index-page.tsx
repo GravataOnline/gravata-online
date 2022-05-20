@@ -11,9 +11,32 @@ import { Input, TextArea } from "components/Input";
 import Link from "next/link";
 import { useRef } from "react";
 import { Header } from "components/Header";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  nome: yup.string().nullable(),
+  estado: yup.string().nullable(),
+  cidade: yup.string().nullable(),
+  ddd: yup.string().nullable(),
+  telefone: yup.string().nullable(),
+  assunto: yup.string().nullable(),
+  mensagem: yup.string().nullable(),
+});
 
 export function IndexPage() {
-  const funcionamento = useRef(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  function submitForm(data: any) {
+    console.log(data);
+  }
 
   return (
     <div className="bg-letras bg-repeat-y relative ">
@@ -40,7 +63,7 @@ export function IndexPage() {
           </div>
           <div className="flex flex-col top-0 z-50 ">
             <div className="flex w-full justify-between flex-row absolute top-0 z-50">
-              <Header noArrow />
+              <Header.Primary noArrow />
             </div>
             <div className="flex w-full justify-center flex-col items-center absolute top-28 z-50">
               <Image
@@ -157,63 +180,76 @@ export function IndexPage() {
               basta entrar em contato, que logo retornaremos
             </div>
           </div>
-          <div className="grid grid-cols-12 gap-3 px-32 ">
-            <div className="col-span-12 mt-10">
-              <Input
-                typed="text"
-                name="nome"
-                placeholder="Nome"
-                autoComplete="off"
-              />
-            </div>
-            <div className="col-span-3">
-              <Input
-                typed="text"
-                name="estado"
-                placeholder="Estado"
-                autoComplete="off"
-              />
-            </div>
-            <div className="col-span-9">
-              <Input
-                typed="text"
-                name="cidade"
-                placeholder="Cidade"
-                autoComplete="off"
-              />
-            </div>
-            <div className="col-span-3">
-              <Input
-                typed="text"
-                name="ddd"
-                placeholder="DDD"
-                autoComplete="off"
-              />
-            </div>
-            <div className="col-span-9">
-              <Input
-                typed="text"
-                name="telefone"
-                placeholder="Telefone"
-                autoComplete="off"
-              />
-            </div>
-            <div className="col-span-12">
-              <Input
-                typed="text"
-                name="assunto"
-                placeholder="Assunto"
-                autoComplete="off"
-              />
-            </div>
-            <div className="col-span-12 h-44">
-              <TextArea name="mensagem" maxLength={5} placeholder="Mensagem" />
-            </div>
+          <form onSubmit={handleSubmit(submitForm)}>
+            <div className="grid grid-cols-12 gap-3 px-32 ">
+              <div className="col-span-12 mt-10">
+                <Input
+                  typed="text"
+                  name="nome"
+                  placeholder="Nome"
+                  autoComplete="off"
+                  register={register}
+                />
+              </div>
+              <div className="col-span-3">
+                <Input
+                  typed="text"
+                  name="estado"
+                  placeholder="Estado"
+                  autoComplete="off"
+                  register={register}
+                />
+              </div>
+              <div className="col-span-9">
+                <Input
+                  typed="text"
+                  name="cidade"
+                  placeholder="Cidade"
+                  autoComplete="off"
+                  register={register}
+                />
+              </div>
+              <div className="col-span-3">
+                <Input
+                  typed="text"
+                  name="ddd"
+                  placeholder="DDD"
+                  autoComplete="off"
+                  register={register}
+                />
+              </div>
+              <div className="col-span-9">
+                <Input
+                  typed="text"
+                  name="telefone"
+                  placeholder="Telefone"
+                  autoComplete="off"
+                  register={register}
+                />
+              </div>
+              <div className="col-span-12">
+                <Input
+                  typed="text"
+                  name="assunto"
+                  placeholder="Assunto"
+                  autoComplete="off"
+                  register={register}
+                />
+              </div>
+              <div className="col-span-12 h-44">
+                <TextArea
+                  register={register}
+                  name="mensagem"
+                  maxLength={5}
+                  placeholder="Mensagem"
+                />
+              </div>
 
-            <div className="col-span-12">
-              <ButtonBlue>Enviar Mensagem</ButtonBlue>
+              <div className="col-span-12">
+                <ButtonBlue type="submit">Enviar Mensagem</ButtonBlue>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </section>
       <section className="bg-footer-theme-blue bg-cover">

@@ -5,12 +5,14 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Noivo from "/public/icons/noivo.svg";
 import Noiva from "/public/icons/noiva.svg";
+import LogoPink from "/public/logo-pink.svg";
+import { ButtonPink } from "components/Button";
 
 interface HeaderProps {
   noArrow?: boolean;
 }
 
-export function Header({ noArrow }: HeaderProps) {
+export function Primary({ noArrow }: HeaderProps) {
   const router = useRouter();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isNoiva, setIsNoiva] = useState<boolean>(false);
@@ -60,3 +62,32 @@ export function Header({ noArrow }: HeaderProps) {
     </>
   );
 }
+
+export function Secondary() {
+  return (
+    <div className="min-w-[100vw] flex flex-row items-center ">
+      <div className="ml-6">
+        <Link href={"/"}>
+          <Image src={LogoPink} width={128} className="cursor-pointer" />
+        </Link>
+      </div>
+      <div className="flex w-full justify-end gap-5 items-center mr-5">
+        <Link href={"cadastro-usuario"}>
+          <span className="text-white text-sm uppercase underline font-medium tracking-wide cursor-pointer">
+            ainda não sou cadastrado {":("}
+          </span>
+        </Link>
+        <Link href={"cadastro-usuario"}>
+          <ButtonPink>
+            <span className="text-sm">CADASTRE-SE GRÁTIS</span>
+          </ButtonPink>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+export const Header = {
+  Primary,
+  Secondary,
+};
