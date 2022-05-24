@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Noivo from "/public/icons/noivo.svg";
 import Noiva from "/public/icons/noiva.svg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Header } from "components/Header";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,8 +16,10 @@ import { FormValues } from "typings/form-cadastro";
 import { ParsedUrlQuery } from "querystring";
 import { ErrorMessage } from "components/ErrorMessage";
 import yup from "utils/yup";
-import api from "./api/http-common";
 import { useToasts } from "react-toast-notifications";
+import { api } from "./api/http-common";
+import Spinner from "components/Spinner";
+import { AuthContext } from "contexts/AuthContext";
 
 const schema = yup
   .object()
@@ -40,6 +42,8 @@ export default function CadastroUsuario() {
   const router = useRouter();
   const { addToast } = useToasts();
   const [dadosNoivos, setDadosNoivos] = useState<ParsedUrlQuery>(router.query);
+  const { signIn } = useContext(AuthContext);
+
   const {
     register,
     handleSubmit,
@@ -89,12 +93,15 @@ export default function CadastroUsuario() {
           },
         },
       });
+
+      await signIn({
+        email: String(router.query.email),
+        password: data.senha,
+      });
+
       addToast("Cadastro realizado com sucesso", { appearance: "success" });
       router.push({
         pathname: "/local-cerimonia",
-        query: {
-          confirmacao: true,
-        },
       });
     } catch (error: any) {
       addToast(error.response.data.message, { appearance: "error" });
@@ -202,7 +209,15 @@ export default function CadastroUsuario() {
                 >
                   Avançar
                 </ButtonBlue>
-                {/* </Link> */}
+              </div>
+              <div className="col-span-12 justify-center items-center">
+                {isSubmitting && (
+                  <Spinner
+                    bgtextcolor="text-yellow-900"
+                    fillcolor="fill-pink-theme"
+                    darktextcolor="dark:text-blue-theme"
+                  />
+                )}
               </div>
             </div>
           </div>

@@ -2,24 +2,38 @@ import { Icons } from "img/icons";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Noivo from "/public/icons/noivo.svg";
 import Noiva from "/public/icons/noiva.svg";
 import LogoPink from "/public/logo-pink.svg";
 import { ButtonPink } from "components/Button";
+import { AuthContext } from "contexts/AuthContext";
+import { destroyCookie, parseCookies } from "nookies";
+import { GetServerSideProps } from "next";
 
 interface HeaderProps {
   noArrow?: boolean;
 }
 
-export function Primary({ noArrow }: HeaderProps) {
+export function Primary({ noArrow }: HeaderProps, props: any) {
   const router = useRouter();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isNoiva, setIsNoiva] = useState<boolean>(false);
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (user?.email) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
+    console.warn(user?.email);
+  }, [user]);
 
   return (
     <>
-      <div
+      <header
+        title="Gravatas Online"
         className={`h-10 p-5 flex flex-row ${
           !noArrow ? "justify-between" : "justify-end"
         } items-center w-full `}
@@ -41,31 +55,50 @@ export function Primary({ noArrow }: HeaderProps) {
         </div>
 
         {!isLogged ? (
-          <Link href={"login"}>
+          <Link href={"/login"}>
             <span className="text-white cursor-pointer underline text-lg">
               Já sou cadastrado
             </span>
           </Link>
         ) : (
-          <Link href={"login"}>
-            <div className="flex cursor-pointer flex-row gap-2 items-center">
-              <Image
-                src={isNoiva ? Noiva : Noivo}
-                alt="Ícone de rosto"
-                width={25}
-              />
-              <span className="text-lg font-medium">SAIR</span>
-            </div>
-          </Link>
+          <>
+            <Link href={"/home"}>
+              <div className="flex cursor-pointer flex-row gap-2 items-center">
+                <Image
+                  src={isNoiva ? Noiva : Noivo}
+                  alt="Ícone de rosto"
+                  width={25}
+                  className={"text-pink-700"}
+                />
+                <span className="text-lg font-lg text-white px-2">
+                  {user?.name}
+                </span>
+              </div>
+            </Link>
+            <span
+              className="text-lg font-lg cursor-pointer text-white"
+              onClick={() => {
+                destroyCookie(null, "gravata-token", {
+                  expires: new Date(0),
+                });
+                window.location.reload();
+              }}
+            >
+              sair
+            </span>
+          </>
         )}
-      </div>
+      </header>
     </>
   );
 }
 
 export function Secondary() {
   return (
-    <div className="min-w-[100vw] flex flex-row items-center ">
+    <header
+      className="min-w-[100vw] flex flex-row items-center "
+      title="Gravatas Online"
+    >
       <div className="ml-6">
         <Link href={"/"}>
           <Image src={LogoPink} width={128} className="cursor-pointer" />
@@ -83,7 +116,7 @@ export function Secondary() {
           </ButtonPink>
         </Link>
       </div>
-    </div>
+    </header>
   );
 }
 

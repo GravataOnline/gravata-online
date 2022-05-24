@@ -27,14 +27,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  await api.request({
-    url: "/User/login",
-    method: "POST",
-    data: {
-      email: "hellen@gmail.com",
-      password: "@Hellen1505",
-    },
-  });
   return {
     props: {},
   };

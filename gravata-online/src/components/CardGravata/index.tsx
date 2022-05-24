@@ -6,7 +6,6 @@ import bgGravata3 from "/public/icons/gravata3.svg";
 import bgGravata4 from "/public/icons/gravata4.svg";
 
 const bgGravata = [bgGravata1, bgGravata2, bgGravata3, bgGravata4];
-console.log("bgGravata", bgGravata[0]);
 
 export function CardGravata({ descricao, titulo, index }: GravataCard) {
   return (

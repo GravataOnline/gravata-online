@@ -4,17 +4,25 @@ import { useRouter } from "next/router";
 import { Header } from "components/Header";
 import Logo from "/public/logo-blue.svg";
 import Casal from "/public/icons/casal.svg";
-import { Input } from "components/Input";
-import { ButtonOutline, ButtonWhite } from "components/Button";
-import Link from "next/link";
+import { useEffect, useState } from "react";
+import Spinner from "components/Spinner";
 
 export default function CadastroUsuario() {
+  const [loading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(!loading);
+    }, 4000);
+
+    loading && router.push("/home");
+  }, [loading]);
 
   return (
     <div className="bg-pink-theme bg-cover w-full min-h-[100vh] relative  ">
       <section>
-        <Header />
+        <Header.Primary />
       </section>
       <section>
         <div className="grid grid-cols-12 gap-4">
@@ -39,6 +47,15 @@ export default function CadastroUsuario() {
             </div>
           </div>
           <div className="col-span-2" />
+          <div className="col-span-12 flex self-center justify-center">
+            {!loading && (
+              <Spinner
+                bgtextcolor="text-yellow-900"
+                fillcolor="fill-pink-theme"
+                darktextcolor="dark:text-blue-theme"
+              />
+            )}
+          </div>
         </div>
       </section>
       <section>
