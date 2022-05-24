@@ -1,13 +1,15 @@
 import { createContext, useEffect, useState } from "react";
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
 import Router from "next/router";
 import jwt_decode from "jwt-decode";
 import { api } from "pages/api/http-common";
+import { serialize } from "cookie";
 
 type AuthContextData = {
   isAuthenticated: boolean;
   user: User | null;
   signIn: (data: SignInData) => Promise<void>;
+  // logout: () => Promise<void>;
 };
 
 type User = {
@@ -71,7 +73,6 @@ export function AuthProvider({ children }: any) {
     });
 
     api.defaults.headers.common["Authorization"] = `Bearer ${result.token}`;
-    console.log("result.token", result.token);
 
     setUser({
       conjuge: result.conjuge,

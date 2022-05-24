@@ -148,8 +148,6 @@ export function TextArea({
       maxLength={maxLength}
       placeholder={placeholder}
       {...props}
-    >
-      oi
-    </textarea>
+    ></textarea>
   );
 }

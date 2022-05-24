@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import api from "./api/http-common";
 import yup from "utils/yup";
 import { ErrorMessage } from "components/ErrorMessage";
 import ReactInputMask from "react-input-mask";

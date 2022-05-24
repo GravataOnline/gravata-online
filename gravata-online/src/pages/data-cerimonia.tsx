@@ -1,17 +1,17 @@
 import { Footer } from "components/Footer";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Header } from "components/Header";
 import Logo from "/public/logo-blue.svg";
 import Calendario from "/public/icons/calendario.svg";
 import { Input } from "components/Input";
 import { ButtonOutline, ButtonWhite } from "components/Button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Header } from "components/Header";
+import { ErrorMessage } from "components/ErrorMessage";
 
 const schema = yup
   .object()
@@ -32,7 +32,7 @@ export default function CadastroUsuario() {
   return (
     <div className="bg-pink-theme bg-cover w-full h-[100vh]  ">
       <section>
-        <Header />
+        <Header.Primary />
       </section>
       <section>
         <div className="grid grid-cols-12 gap-4">
@@ -63,14 +63,7 @@ export default function CadastroUsuario() {
                   typed="datetime-local"
                   register={register}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="nome"
-                  render={({ message }) => {
-                    console.log(message);
-                    return <p>{message}</p>;
-                  }}
-                />
+                <ErrorMessage error={errors.dtcerimonia} />
               </div>
             </div>
             <div className="w-full pb-4 gap-3 flex flex-row justify-center items-center ">
